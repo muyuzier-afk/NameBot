@@ -1,6 +1,6 @@
 # AI PR Review Bot
 
-一个基于AI大模型的GitHub Pull Request自动审查机器人。
+一个基于AI大模型的GitHub Pull Request自动审查机器人，采用模块化微服务架构设计。
 
 ## 功能特性
 
@@ -12,6 +12,9 @@
 - 支持配置文件和环境变量双重配置方式
 - 可限制审查文件数量和变更行数
 - 详细的审查报告格式
+- 支持自定义OpenAI BaseURL
+- 模块化微服务架构设计
+- 可扩展的提示词配置
 
 ## 技术栈
 
@@ -42,6 +45,7 @@ cp config.json.example config.json
 
 - `openai.apiKey`: OpenAI API密钥
 - `openai.model`: 使用的模型（默认gpt-4）
+- `openai.baseURL`: OpenAI API基础URL（默认https://api.openai.com/v1）
 - `github.appId`: GitHub App ID
 - `github.privateKey`: GitHub App私钥
 - `github.webhookSecret`: Webhook密钥
@@ -86,7 +90,16 @@ npm run dev
 ├── .env.example          # 环境变量示例
 ├── .gitignore           # Git忽略文件
 ├── src/
-│   └── codeReviewer.js  # 代码审查核心逻辑
+│   ├── config/           # 配置管理模块
+│   │   └── index.js      # 配置加载和管理
+│   ├── services/         # 服务模块
+│   │   ├── openaiService.js    # OpenAI服务
+│   │   ├── githubService.js    # GitHub服务
+│   │   └── reviewService.js    # 审查服务
+│   ├── prompts/          # 提示词配置
+│   │   └── codeReview.js # 代码审查提示词
+│   ├── utils/            # 工具函数（预留）
+│   └── models/           # 数据模型（预留）
 └── README.md            # 项目文档
 ```
 
@@ -102,15 +115,33 @@ npm run dev
 |--------|------|--------|
 | `openai.apiKey` | OpenAI API密钥 | - |
 | `openai.model` | 使用的模型 | gpt-4 |
+| `openai.baseURL` | OpenAI API基础URL | https://api.openai.com/v1 |
 | `review.enabled` | 是否启用审查 | true |
 | `review.maxFiles` | 最大审查文件数 | 20 |
 | `review.maxLines` | 最大变更行数 | 10000 |
 | `review.commentTitle` | 评论标题 | 🤖 AI 代码审查报告 |
+| `server.port` | 服务器端口 | 3000 |
+| `server.host` | 服务器主机 | 0.0.0.0 |
 
 ## 自定义
 
-- 可以修改`config.json`来调整审查行为
-- 可以修改`src/codeReviewer.js`中的提示词来调整AI的审查风格
+- **配置文件**：修改`config.json`来调整审查行为
+- **提示词**：修改`src/prompts/codeReview.js`中的提示词来调整AI的审查风格
+- **服务扩展**：在`src/services`目录下添加新的服务模块
+- **工具函数**：在`src/utils`目录下添加工具函数
+
+## 模块化架构
+
+项目采用模块化微服务架构：
+
+1. **配置模块**：统一的配置管理
+2. **服务模块**：
+   - OpenAI服务：处理AI模型调用
+   - GitHub服务：处理GitHub API交互
+   - 审查服务：协调审查流程
+3. **提示词模块**：可自定义的AI提示词
+4. **工具模块**：通用工具函数
+5. **模型模块**：数据模型定义
 
 ## 许可证
 

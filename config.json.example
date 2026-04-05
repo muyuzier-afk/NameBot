@@ -1,7 +1,8 @@
 {
   "openai": {
     "apiKey": "your_openai_api_key",
-    "model": "gpt-4"
+    "model": "gpt-4",
+    "baseURL": "https://api.openai.com/v1"
   },
   "github": {
     "appId": "your_github_app_id",
@@ -13,5 +14,9 @@
     "maxFiles": 20,
     "maxLines": 10000,
     "commentTitle": "🤖 AI 代码审查报告"
+  },
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0"
   }
 }
