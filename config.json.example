@@ -1,0 +1,17 @@
+{
+  "openai": {
+    "apiKey": "your_openai_api_key",
+    "model": "gpt-4"
+  },
+  "github": {
+    "appId": "your_github_app_id",
+    "privateKey": "your_github_app_private_key",
+    "webhookSecret": "your_webhook_secret"
+  },
+  "review": {
+    "enabled": true,
+    "maxFiles": 20,
+    "maxLines": 10000,
+    "commentTitle": "🤖 AI 代码审查报告"
+  }
+}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AI-powered Pull Request Review Bot",
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
     "dev": "probot run ./index.js",
