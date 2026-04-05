@@ -13,7 +13,8 @@
     "enabled": true,
     "maxFiles": 20,
     "maxLines": 10000,
-    "commentTitle": "🤖 AI 代码审查报告"
+    "commentTitle": "🤖 AI 代码审查报告",
+    "promptFile": "prompt.md"
   },
   "server": {
     "port": 3000,

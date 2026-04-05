@@ -86,18 +86,17 @@ npm run dev
 .
 ├── index.js              # 主入口文件
 ├── package.json          # 项目配置
+├── prompt.md            # 提示词配置文件（可自定义）
 ├── config.json.example   # 配置文件示例
 ├── .env.example          # 环境变量示例
 ├── .gitignore           # Git忽略文件
 ├── src/
 │   ├── config/           # 配置管理模块
-│   │   └── index.js      # 配置加载和管理
+│   │   └── index.js      # 配置和提示词加载管理
 │   ├── services/         # 服务模块
 │   │   ├── openaiService.js    # OpenAI服务
 │   │   ├── githubService.js    # GitHub服务
 │   │   └── reviewService.js    # 审查服务
-│   ├── prompts/          # 提示词配置
-│   │   └── codeReview.js # 代码审查提示词
 │   ├── utils/            # 工具函数（预留）
 │   └── models/           # 数据模型（预留）
 └── README.md            # 项目文档
@@ -126,9 +125,38 @@ npm run dev
 ## 自定义
 
 - **配置文件**：修改`config.json`来调整审查行为
-- **提示词**：修改`src/prompts/codeReview.js`中的提示词来调整AI的审查风格
+- **提示词**：修改`prompt.md`文件来自定义AI的审查风格（支持热加载，5秒自动刷新）
 - **服务扩展**：在`src/services`目录下添加新的服务模块
 - **工具函数**：在`src/utils`目录下添加工具函数
+
+## 提示词自定义
+
+项目使用 `prompt.md` 文件管理提示词，支持热加载：
+
+### 提示词文件结构
+
+```markdown
+# AI 代码审查提示词
+
+## 系统提示词
+[你的系统提示词内容]
+
+## 用户提示词模板
+[你的用户提示词模板，支持变量替换：{title}, {description}, {fileList}, {diff}]
+```
+
+### 可用变量
+
+- `{title}` - PR标题
+- `{description}` - PR描述
+- `{fileList}` - 变更文件列表
+- `{diff}` - 代码差异内容
+
+### 热加载特性
+
+- 每5秒自动检查并刷新提示词
+- 修改 `prompt.md` 后无需重启Bot
+- 如果提示词文件不存在或解析失败，会自动使用默认提示词
 
 ## 模块化架构
 
